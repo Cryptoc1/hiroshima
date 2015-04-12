@@ -7,11 +7,13 @@ Hiroshima is in very early development and currently only supports Ask.fm. In fu
 
 * SMS Bombing
 * Instagram Likes
-* Instagram Comments
+* ~~Instagram Comments~~
 * Twitter Mentions/Send Tweet
 * Twitter Favorite
 * YouTube Likes
 * YouTube Comments
+
+As of this commit, Instagram allows for only *approved* clients to comment on media
 
 ### Dependencies:
 * Mechanize
