@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from instagram.client import InstagramAPI
-import sys, os, pyperclip, time
+import sys, os, pyperclip, time, webbrowser
 
 if len(sys.argv) > 1 and sys.argv[1] == 'local':
     try:
@@ -43,7 +43,10 @@ def print_user_info(u):
     print "> website: " + u.website
     print "> counts: " + str(u.counts)
 
-print "> Redirect URI copied to clipboard, paste it into your browser and copy/paste the ?code=<some number> back into this prompt."
+# print "> Redirect URI copied to clipboard, paste it into your browser and copy/paste the ?code=<some number> back into this prompt."
+# pyperclip.copy(redirect_uri)
+print  "Going to attempt to open Authorization URL in browser, if not, it's been copied to the clipboard."
+webbrowser.open(redirect_uri)
 pyperclip.copy(redirect_uri)
 
 code = (str(input("> Paste in code in query string after redirect: ").strip()))
