@@ -53,15 +53,15 @@ access_token = api.exchange_code_for_access_token(code)
 print "> You've been authenticated, now it's just a matter of what to do next... I would say enter a username below"
 uname = raw_input("> ")
 
+a_api = InstagramAPI(access_token=access_token[0])
 print "> Searching..."
-res = api.user_search(q=uname, count=1)
+res = a_api.user_search(q=uname, count=1)
 print "Found something..."
 
-user = api.user(res[0].id)
+user = a_api.user(res[0].id)
 
 print_user_info(user)
 
-a_api = InstagramAPI(access_token=access_token[0])
 print "Now what?"
 cmd = raw_input("> ").upper()
 delay = 5
