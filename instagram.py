@@ -64,19 +64,17 @@ print_user_info(user)
 a_api = InstagramAPI(access_token=access_token[0])
 print "Now what?"
 cmd = raw_input("> ").upper()
+delay = 5
 if cmd == "LIKE ALL":
-    print "Enter the delay between requests. (Longer delays means longer processing time, but are less likely to cause errors. Shorter delays, on the other hand, process faster, but are more error-prone. Recommended delay is 5 or 6. Must be an integer.)"
-    delay = int(raw_input("> "))
-    print "Liking all photos. Depending on the delay you've entered, this may take a while..."
+    print "Liking all photos. Due to rate-limits, this may take a while..."
     print "ETA: " + str(user.counts['media'] * delay) + " S"
     for media in a_api.user_recent_media(user_id=user.id, count=user.counts['media'])[0]:
         a_api.like_media(media.id)
         print "Photo Liked"
         time.sleep(delay)
 elif cmd == "UNLIKE ALL":
-    print "Enter the delay between requests. (Longer delays mean longer processing times, but are less likely to cause errors. Shorter delays, on the other hand, process faster, but are more error-prone. Recommended delay is 5 or 6. Must be an integer.)"
     delay = int(raw_input("> "))
-    print "Unliking all photos. Depending on the delay you've entered, this may take a while..."
+    print "Unliking all photos. Due to rate-limits, this may take a while..."
     print "ETA: " + str(user.counts['media'] * delay) + " S"
     for media in a_api.user_recent_media(user_id=user.id, count=user.counts['media'])[0]:
         a_api.unlike_media(media.id)
