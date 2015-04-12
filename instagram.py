@@ -65,9 +65,13 @@ print_user_info(user)
 print "Now what?"
 cmd = raw_input("> ").upper()
 delay = 5
+eta = user.counts['media'] * delay
 if cmd == "LIKE ALL":
     print "Liking all photos. Due to rate-limits, this may take a while..."
-    print "ETA: " + str(user.counts['media'] * delay) + " S"
+    if eta > 60:
+        print "ETA: " + str(eta / 60) + "M"
+    else:
+        print "ETA: " + str(eta) + "S"
     for media in a_api.user_recent_media(user_id=user.id, count=user.counts['media'])[0]:
         a_api.like_media(media.id)
         print "Photo Liked"
@@ -75,7 +79,10 @@ if cmd == "LIKE ALL":
 elif cmd == "UNLIKE ALL":
     delay = int(raw_input("> "))
     print "Unliking all photos. Due to rate-limits, this may take a while..."
-    print "ETA: " + str(user.counts['media'] * delay) + " S"
+    if eta > 60:
+        print "ETA: " + str(eta / 60) + "M"
+    else:
+        print "ETA: " + str(eta) + "S"
     for media in a_api.user_recent_media(user_id=user.id, count=user.counts['media'])[0]:
         a_api.unlike_media(media.id)
         print "Photo Unliked"
