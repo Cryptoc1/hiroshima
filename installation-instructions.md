@@ -8,7 +8,8 @@ The next thing you'll need to do is setup clients with respective social network
 
 Ask.fm: The ask.fm spammer doesn't use an API, it interacts with the web page, so it doesn't need any configurig in the sense of an API. It does, however, take advantage of the *Anonymous* feature, that being said, if the person you are attempting to spam doesn't allow anonymous question, you can't spam them.
 
-Instagram: The Instagram script DOES require APIs to be configured. 
+Instagram: The Instagram script DOES require APIs to be configured.
+
 1. Go to [Instagram Client Manager](https://instagram.com/developer/clients/manage/)
 
 2. Create a new client named Hiroshima (Make something up for the webite option)
@@ -19,7 +20,8 @@ Instagram: The Instagram script DOES require APIs to be configured.
 
 5. You should be set. 
 
-Twitter: Setting up Twitter client is similar to Instgrams process. 
+Twitter: Setting up Twitter client is similar to Instgrams process.
+
 1. Go to [Twitter App Manager](https://apps.twitter.com/)
 
 2. Click on *Create New App*
