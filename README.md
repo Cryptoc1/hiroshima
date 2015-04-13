@@ -18,4 +18,8 @@ Hiroshima is in very early development and currently only supports Ask.fm. In fu
 
 ### Dependencies:
 * Mechanize
+* python-twitter
+* python-instagram
+* pyperclip
+* webbrowser
 
