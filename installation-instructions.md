@@ -28,7 +28,7 @@ Twitter: Setting up Twitter client is similar to Instgrams process.
 
 3. Name it Hiroshima
 
-4. Under description, you could enter the following: "Hiroshima is a multi-network spammer written in Python"
+4. Under description, you could enter the following: *"Hiroshima is a multi-network spammer written in Python"*
 
 5. Under the __*Callback URL*__ enter *http://127.0.0.1/hiroshima/auth/twitter* (using localhost will NOT work here)
 
