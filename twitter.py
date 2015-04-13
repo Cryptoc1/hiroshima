@@ -58,7 +58,7 @@ def get_access_token(consumer_key, consumer_secret):
     return {'access_token': resp.get('oauth_token'), 'access_secret': resp.get('oauth_token_secret')}
 
 def get_attack_type():
-    print "How should we attack? (fav, RT, or mention)"
+    print "How should we attack? (fav, or mention)"
     return raw_input("> ").upper()
 
 def get_user():
@@ -67,27 +67,48 @@ def get_user():
 
 def init_attack(api):
     user = get_user()
-    print "How many tweets should be fetched?"
-    tweet_limit = raw_input("> ")
-    timeline = api.GetUserTimeline(screen_name=user, count=tweet_limit, include_rts=True)
     attack_type = get_attack_type()
     if attack_type == "FAV":
-        fav_attack(api=api, u=user, tl=timeline)
-    elif attack_type == "RT":
-        rt_attack(api=api, u=user, tl=timeline)
+        fav_attack(api=api, u=user)
     elif attack_type == "MENTION":
-        mention_attack(api=api, u=user, tl=timeline)
+        mention_attack(api=api, u=user)
     else:
         print "Unknown input."
         init_attack(api)
 
-def fav_attack(api, u, tl):
+def fav_attack(api, u):
+    print "How many tweets should be fetched/favorited? (Must be an integer less than 200)"
+    twlt = raw_input("> ")
+    tl = api.GetUserTimeline(screen_name=u, count=twlt, include_rts=True)
     for s in tl:
         if not s.favorited:
             api.CreateFavorite(s)
             print "Favorited a tweet by @" + u
         else:
             print "Tweet already favorited, skipping..."
+    time.sleep(2.5)
+
+def mention_attack(api, u):
+    print "Enter the tweet's text"
+    txt = raw_input("> ")
+    txt = "@" + u + " " + txt
+    char_count = 0
+    for char in txt:
+        char_count = char_count + 1
+    if char_count > 140:
+        print "Tweet is too long (140 character limit, remember?) Aborting attack."
+        init_attack(api)
+    print "How many mentions? (Must be integer)"
+    repeat = int(raw_input("> "))
+    print "About to tweet \"" + txt + "\" " + str(repeat) + "number of times."
+    print "Press Enter to confirm, or CTRL + C to cancel:"
+    if raw_input("> ") == "":
+        n = 0
+        while n < repeat:
+            api.PostUpdate(txt)
+            print "Tweet posted"
+            n = n + 1
+            time.sleep(2.5)
 
 def main():
     consumer_key = 'p0k5TwqEaNspElJkQCsD33Khn'
@@ -98,7 +119,6 @@ def main():
             consumer_secret=consumer_secret,
             access_token_key=tokens['access_token'],
             access_token_secret=tokens['access_secret']))
-
 
 if __name__ == "__main__":
     main()
