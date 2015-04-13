@@ -23,7 +23,7 @@ except (ImportError, AttributeError):
     pass
 
 client_id = 'd00446a61de44643bd0d1a21d78e0f5a'
-client_secret = 'c742af13e3a04138bad288c50e005999'
+client_secret = sys.argv[1]
 redirect_uri = 'http://localhost/hiroshima/auth/insta'
 raw_scope = 'basic likes'
 scope = raw_scope.split(' ')
