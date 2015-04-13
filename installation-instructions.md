@@ -14,7 +14,7 @@ Instagram: The Instagram script DOES require APIs to be configured.
 
 2. Create a new client named Hiroshima (Make something up for the webite option)
 
-3. Under the *Redirect URI* option, enter *http://localhost/hiroshima/auth/insta* or *http://127.0.0.1/hiroshima/auth/insta*. Either of the two function the same.
+3. Under the __*Redirect URI*__ option, enter *http://localhost/hiroshima/auth/insta* or *http://127.0.0.1/hiroshima/auth/insta*. Either of the two function the same.
 
 4. Copy the *Client Id* and *Client Secret* into the *instagram.py* file. (The client tokens could also be passed as arguments, but support is iffy and tedious)
 
