@@ -35,13 +35,13 @@ api = InstagramAPI(client_id=client_id, client_secret=client_secret, redirect_ur
 redirect_uri = api.get_authorize_login_url(scope = scope)
 
 def print_user_info(u):
-    print "> id: " + u.id
-    print "> username: " + u.username
-    print "> full_name: " + u.full_name
-    print "> profile_picture: " + u.profile_picture
-    print "> bio: " + u.bio
-    print "> website: " + u.website
-    print "> counts: " + str(u.counts)
+    print "id: " + u.id
+    print "username: " + u.username
+    print "full_name: " + u.full_name
+    print "profile_picture: " + u.profile_picture
+    print "bio: " + u.bio
+    print "website: " + u.website
+    print "counts: " + str(u.counts)
 
 # print "> Redirect URI copied to clipboard, paste it into your browser and copy/paste the ?code=<some number> back into this prompt."
 # pyperclip.copy(redirect_uri)
@@ -49,15 +49,15 @@ print  "Going to attempt to open Authorization URL in browser, if not, it's been
 webbrowser.open(redirect_uri)
 pyperclip.copy(redirect_uri)
 
-code = (str(input("> Paste in code in query string after redirect: ").strip()))
+code = (str(input("Paste in code in query string after redirect: ").strip()))
 
 access_token = api.exchange_code_for_access_token(code)
 
-print "> You've been authenticated, now it's just a matter of what to do next... I would say enter a username below"
+print "You've been authenticated, now it's just a matter of what to do next... I would say enter a username below"
 uname = raw_input("> ")
 
 a_api = InstagramAPI(access_token=access_token[0])
-print "> Searching..."
+print "Searching..."
 res = a_api.user_search(q=uname, count=1)
 print "Found something..."
 
