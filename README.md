@@ -7,13 +7,14 @@ Hiroshima is in very early development and currently only supports Ask.fm. In fu
 
 * SMS Bombing
 * Instagram Likes
-* ~~Instagram Comments~~
-* Twitter Mentions/Send Tweet
+* ~~Instagram Comments~~<sup>1</sup>
+* ~~Twitter Mentions/Send Tweet~~<sup>2</sup>
 * Twitter Favorite
 * YouTube Likes
 * YouTube Comments
 
-As of this commit, Instagram allows for only *approved* clients to comment on media
+<sup>1</sup>As of this commit, Instagram allows for only *approved* clients to comment on media.
+<sup>2</sup>Twitter doesn't allow for two like tweets to be tweeted (throws duplication error)
 
 ### Dependencies:
 * Mechanize
