@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Shitty code, deal with it. (atleast it's better than Instagram.py)
+
 import twitter
 from requests_oauthlib import OAuth1Session
 import webbrowser, os, sys, time
@@ -57,17 +59,17 @@ def get_access_token(consumer_key, consumer_secret):
 
 def get_attack_type():
     print "How should we attack? (fav, RT, or mention)"
-    attack = raw_input("> ").upper()
-    return 
+    return raw_input("> ").upper()
 
-def get_user(api):
+def get_user():
     print "Enter the username of who you'd like to attack."
-    user = raw_input("> ")
-    return api.GetUser(user)
+    return raw_input("> ")
 
 def init_attack(api):
-    user = get_user(api)
-    timeline = api.GetUserTimeline(user)
+    user = get_user()
+    print "How many tweets should be fetched?"
+    tweet_limit = raw_input("> ")
+    timeline = api.GetUserTimeline(screen_name=user, count=tweet_limit, include_rts=True)
     attack_type = get_attack_type()
     if attack_type == "FAV":
         fav_attack(api=api, u=user, tl=timeline)
@@ -77,22 +79,26 @@ def init_attack(api):
         mention_attack(api=api, u=user, tl=timeline)
     else:
         print "Unknown input."
-        init_attack()
+        init_attack(api)
 
-def fav_attack(u, tl):
-    print [s.text for s in tl]
+def fav_attack(api, u, tl):
+    for s in tl:
+        if not s.favorited:
+            api.CreateFavorite(s)
+            print "Favorited a tweet by @" + u
+        else:
+            print "Tweet already favorited, skipping..."
 
 def main():
     consumer_key = 'p0k5TwqEaNspElJkQCsD33Khn'
-    consumer_secret = 'SNC9pak8wUZaafy95B7wFzjbKM8HeZF90GhBz8qeAWxXFtYOKw'
+    consumer_secret = sys.argv[1]
     tokens = get_access_token(consumer_key, consumer_secret)
 
-    api = twitter.Api(consumer_key=consumer_key, 
+    init_attack(twitter.Api(consumer_key=consumer_key, 
             consumer_secret=consumer_secret,
             access_token_key=tokens['access_token'],
-            access_token_secret=tokens['access_secret'])
+            access_token_secret=tokens['access_secret']))
 
-    init_attack(api)
 
 if __name__ == "__main__":
     main()
