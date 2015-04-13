@@ -28,3 +28,5 @@ Hiroshima is in very early development and currently only supports Ask.fm. In fu
 * pyperclip
 * webbrowser
 
+Hiroshima has only been tested/designed for Mac OSX
+
