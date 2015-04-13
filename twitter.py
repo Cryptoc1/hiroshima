@@ -32,7 +32,8 @@ def get_access_token(consumer_key, consumer_secret):
     print ''
 
     webbrowser.open(url)
-    pincode = raw_input('Pincode? ')
+    print "Enter code prompted after leaving twitter."
+    pincode = raw_input("> ")
 
     print ''
     print 'Generating and signing request for an access token'
@@ -54,6 +55,32 @@ def get_access_token(consumer_key, consumer_secret):
     print "Authenticated"
     return {'access_token': resp.get('oauth_token'), 'access_secret': resp.get('oauth_token_secret')}
 
+def get_attack_type():
+    print "How should we attack? (fav, RT, or mention)"
+    attack = raw_input("> ").upper()
+    return 
+
+def get_user(api):
+    print "Enter the username of who you'd like to attack."
+    user = raw_input("> ")
+    return api.GetUser(user)
+
+def init_attack(api):
+    user = get_user(api)
+    timeline = api.GetUserTimeline(user)
+    attack_type = get_attack_type()
+    if attack_type == "FAV":
+        fav_attack(api=api, u=user, tl=timeline)
+    elif attack_type == "RT":
+        rt_attack(api=api, u=user, tl=timeline)
+    elif attack_type == "MENTION":
+        mention_attack(api=api, u=user, tl=timeline)
+    else:
+        print "Unknown input."
+        init_attack()
+
+def fav_attack(u, tl):
+    print [s.text for s in tl]
 
 def main():
     consumer_key = 'p0k5TwqEaNspElJkQCsD33Khn'
@@ -65,8 +92,7 @@ def main():
             access_token_key=tokens['access_token'],
             access_token_secret=tokens['access_secret'])
 
-    print api.VerifyCredentials()
-
+    init_attack(api)
 
 if __name__ == "__main__":
     main()
