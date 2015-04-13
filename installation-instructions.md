@@ -23,6 +23,7 @@ The next thing you'll need to do is setup clients with respective social network
 
 			Hiroshima is a multi-netowrk spammer
 
+		
 		5. Under the *Callback URL* enter *http://127.0.0.1/hiroshima/auth/twitter* (using localhost will NOT work here)
 		6. Once created, go to the settings page and enter the *Keys and Access Tokens* tab
 		7. Ensure that the *Acces Level* is set to *Read and Write*
