@@ -25,8 +25,6 @@ Hiroshima is in very early development and currently only supports Ask.fm. In fu
 * Mechanize
 * python-twitter
 * python-instagram
-* pyperclip
 * webbrowser
 
 Hiroshima has only been tested/designed for Mac OSX
-
