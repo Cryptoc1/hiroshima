@@ -18,8 +18,7 @@ Hiroshima is in very early development and currently only supports Ask.fm. In fu
 
 ### TODO
 * create one interactive interface to all spammers
-* add server stuff to git
-* create installation script
+* add mechanize installation to install.sh
 
 ### Dependencies:
 * Mechanize
