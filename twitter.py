@@ -111,7 +111,7 @@ def mention_attack(api, u):
             time.sleep(2.5)
 
 def main():
-    consumer_key = 'p0k5TwqEaNspElJkQCsD33Khn'
+    consumer_key = 'ss9uxPWgFA5VIjZsSx5J0riHE'
     consumer_secret = sys.argv[1]
     tokens = get_access_token(consumer_key, consumer_secret)
 
