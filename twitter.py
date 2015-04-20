@@ -58,7 +58,7 @@ def get_access_token(consumer_key, consumer_secret):
     return {'access_token': resp.get('oauth_token'), 'access_secret': resp.get('oauth_token_secret')}
 
 def get_attack_type():
-    print "How should we attack? (fav, or mention)"
+    print "How should we attack? (fav)"
     return raw_input("> ").upper()
 
 def get_user():
