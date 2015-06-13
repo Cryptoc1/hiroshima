@@ -9,7 +9,8 @@ Hiroshima is in very early development and currently only supports Ask.fm. In fu
 - [x] Instagram Likes
 - [ ] ~~Instagram Comments~~<sup>1</sup>
 - [ ] ~~Twitter Mentions/Send Tweet~~<sup>2</sup>
-- [ ] Twitter Favorite
+- [x] Twitter Favorite
+- [ ] Twitter Reply
 - [ ] YouTube Likes
 - [ ] YouTube Comments
 - [ ] Kik messaging
