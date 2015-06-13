@@ -3,7 +3,7 @@
 ##
 # 
 # networks.py
-# this file contains the classes for different social network attacks.
+# This file contains the classes for different social network attacks.
 # Samuel Steele (cryptoc1)
 #
 ##
@@ -11,6 +11,7 @@
 
 import sys, os, time, webbrowser
 from instagram.client import InstagramAPI
+import mechanize
 
 if len(sys.argv) > 1 and sys.argv[1] == 'local':
     try:
@@ -145,5 +146,30 @@ class Twitter:
         pass
 
 class AskFM:
-    def __init__(self):
-        pass
+    def __init__(self, username):
+        self.username = username
+        self.delay = 5
+
+    def ask_question(self, q, count):
+        n = 0
+        eta = self.delay * int(count)
+        print self.format_eta(eta)
+        while n < int(count):
+            br = mechanize.Browser()
+            br.open("http://ask.fm/" + self.username)
+
+            for form in br.forms():
+                if form.attrs['id'] == "question_form":
+                    br.form = form
+                    break
+            br.form['question[question_text]'] = q
+            br.submit()
+            n += 1
+            print "Question submitted."
+            time.sleep(self.delay)
+
+    def format_eta(self, eta):
+        if eta > 60:
+            return "ETA: " + str(eta / 60) + "M"
+        else:
+            return "ETA: " + str(eta)

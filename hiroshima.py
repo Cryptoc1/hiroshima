@@ -107,7 +107,24 @@ def twitter_attack():
     pass
 
 def askfm_attack():
-    pass
+    print "Enter the username"
+    username = raw_input("> ")
+    ask = networks.AskFM(username)
+    print "Enter the question to be asked"
+    query = raw_input("> ")
+    print "Enter the number of times the question should be asked"
+    count = raw_input("> ")
+    print "About to ask @" + username + " \"" + query + "\", " + count + " times. Proceed? (Y/n)"
+    prompt = raw_input("> ").lower()
+    if prompt == "y":
+        ask.ask_question(query, int(count))
+    elif prompt == "n":
+        print "Aborting attack."
+    else:
+        print "Unrecognized character(s), restarting attack."
+        askfm_attack()
+    print "ask.fm attack complete."
+    prologue()
 
 if __name__ == "__main__":
     print "Hello, and welcome to Hiroshima: A Social Spammer."
