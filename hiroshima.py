@@ -9,7 +9,6 @@
 ##
 
 import networks
-import os, sys
 
 DEVMODE = True
 
