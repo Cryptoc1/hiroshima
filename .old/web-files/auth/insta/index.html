@@ -1,0 +1,17 @@
+<script>
+	function copyToClipboard(text) {
+		window.prompt("Copy/Paste the higlighted code within this prompt into the commmand line.", text);
+	}
+	function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    	results = regex.exec(location.search);
+    	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+
+	window.onload = function() {
+		copyToClipboard(getParameterByName('code'));
+	}
+</script>
+
+<h1>Code should be prompted for fast copying.</h1>
