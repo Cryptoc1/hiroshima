@@ -8,7 +8,7 @@
 #
 ##
 
-import networks
+import networks, sys
 
 DEVMODE = True
 
@@ -26,16 +26,22 @@ _usage = "hiroshima help: \
                     \n\t\t\t+ Like \
                     \n\t\t\t+ Un-like \
                 \n\t\tAskFM: \
-                    \n\t\t\t+ Ask Question"
+                    \n\t\t\t+ Ask Question \
+            \n\tCommands: \
+                \n\t\tbegin :: enters the main-loop to attack \
+                \n\t\texit :: exits the program \
+                \n\t\thelp|? :: prints this help dialog "
 
 def prologue():
-    print "For help, enter 'help', or '?'. To begin, enter 'begin'."
+    print "For help, enter 'help', or '?'. To begin, enter 'begin', or 'exit' to exit."
     cmd = raw_input("> ").lower()
     if cmd == "help" or cmd == "?":
         print _usage
         prologue()
     elif cmd == "begin":
         main()
+    elif cmd == "exit":
+        sys.exit()
     else:
         prologue()
 
@@ -89,12 +95,11 @@ def instagram_attack():
                 print "Please check to make sure you have the correct username. (The attack will now start over)."
                 instagram_attack()
             else:
-                print "Unrecognized input."
+                print "Unrecognized characters(s)"
                 prologue()
         else:
-            print "There was an error logining in."
+            print "There was an error logging in."
             prologue()
-
     elif prompt == "n":
         print "Okay..."
         prologue()
@@ -103,7 +108,66 @@ def instagram_attack():
         prologue()
 
 def twitter_attack():
-    pass
+    twit = networks.Twitter()
+    print "In order for any actions to be preformed, you need to authorize hiroshima to use your Twitter account. Proceed? (Y/n)"
+    prompt = raw_input("> ").lower()
+    if prompt == "y":
+        if twit.login():
+            print "Enter the username of your victim."
+            username = raw_input("> ")
+            print "Searching..."
+            search = twit.search_users(username)
+            print "I found this: "
+            print twit.format_user_info(search)
+            print "Is this the intended victim? (Y/n)"
+            prompt = raw_input("> ").lower()
+            if prompt == "y":
+                if twit.set_victim(search):
+                    print "Enter attack type (" + twit.get_attack_types() + ")"
+                    attack_type = raw_input("> ").lower()
+                    if attack_type == "favorite":
+                        print "Enter the number of tweets to favorite."
+                        twit.fav_attack(raw_input("> "))
+                        print "Favorite attack complete."
+                        prologue()
+                    elif attack_type == "reply":
+                        print "Enter tweet text (remember the 140 character limit)."                        
+                        text = raw_input("> ")
+                        if len(text) > 140:
+                            print "Text length excedes (140) character limit, starting over."
+                            twitter_attack()
+                        else:
+                            print "Enter the number of tweets to reply to."
+                            twit.reply_attack(text, raw_input("> "))
+                            print "Reply attack complete."
+                            prologue()
+                    elif attack_type == "retweet":
+                        print "Enter the number of tweets to be retweeted."
+                        twit.rewtweet_attack(raw_input("> "))
+                        print "Retweet attack complete."
+                        prologue()
+                    else:
+                        print "Attack type not entered, starting attack over..."
+                        twitter_attack()
+                else:
+                    print "There was an error setting the victim."
+                    prologue()
+            elif prompt == "n":
+                print "Please check to make sure you have the correct username. (The attack will now start over)."
+                twitter_attack()
+            else:
+                print "Unrecognized character(s)"
+                prologue()
+        else:
+            print "There was an error logging in."
+            prologue()
+    elif prompt == "n":
+        print "Okay..."
+        prologue()
+    else:
+        print "Unrecognized character(s)"
+        prologue()
+
 
 def askfm_attack():
     print "Enter the username"

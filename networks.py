@@ -11,6 +11,7 @@
 
 import sys, os, time, webbrowser
 from instagram.client import InstagramAPI
+import tweepy
 import mechanize
 
 if len(sys.argv) > 1 and sys.argv[1] == 'local':
@@ -69,7 +70,6 @@ class Instagram:
             return  True
         else:
             return False
-        pass
 
     def search_users(self, uname):
         return self.a_api.user(self.a_api.user_search(q=uname, count=1)[0].id)
@@ -128,7 +128,6 @@ class Instagram:
                     print "Photo with id: " + str(media.id) + " already not liked, skipping."
                 time.sleep(self.delay)
 
-
     def get_attack_types(self):
         return "like, unlike"
 
@@ -142,8 +141,103 @@ class Instagram:
         return "id: " + u.id + "\nusername: " + u.username + "\nfull_name: " + u.full_name + "\nprofile_picture: " + u.profile_picture + "\nbio: " + u.bio + "\nwebsite: " + u.website + "\ncounts: " + str(u.counts)
 
 class Twitter:
-    def __init__(self, client_secret):
-        pass
+    def __init__(self):
+        self.consumer_key = "ss9uxPWgFA5VIjZsSx5J0riHE"
+        self.consumer_secret = "B2HFkfYtCIAvl2JebZky9G790ggeNUzDbcnVC6FpsRlIufcWUy"
+        self.victim = None
+        self.auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
+        self.redirect_uri = self.auth.get_authorization_url()
+        self.delay = 5
+    
+    def login(self):
+        print "You will be redirected to an authorization page in your browser. Copy the code in the prompt and paste it below."
+        webbrowser.open(self.redirect_uri)
+        code = raw_input("code: ")
+        self.auth.get_access_token(code)
+        if self.auth.access_token:
+            self.api = tweepy.API(self.auth)
+            print "Your account has been authorized."
+            return True
+        else:
+            return False
+
+    def set_victim(self, user):
+        self.victim = self.api.get_user(user.id)
+        if self.victim != None:
+            return True
+        else:
+            return False
+
+    def search_users(self, username):
+        return self.api.get_user(username)
+
+    def fav_attack(self, count):
+        count = int(count)
+        print "Favoriting " + str(count) + " tweets. Due to rate-limits, this may take a while..."
+        print "Tweets expected to be favorited: " + str(count)
+        eta = count * self.delay
+        print self.format_eta(eta)
+        for s in self.api.user_timeline(self.victim.id, count=count):
+            if s.favorited:
+                print "Tweet with id: " + str(s.id) + " already favorited, skipping."
+            else:
+                self.api.create_favorite(s.id)
+                print "Tweet with id: " + str(s.id) + " favorited."
+            time.sleep(self.delay)
+    
+    def reply_attack(self, text, count):
+        count = int(count)
+        print "Replying to " + str(count) + " tweets. Due to rate-limits, this may take a while..."
+        print "Tweets expected to be replied to: " + str(count)
+        eta = count * self.delay
+        print self.format_eta(eta)
+        for s in self.api.user_timeline(self.victim.id, count=count):
+            self.api.update_status(text, in_reply_to_status_id=s.id)
+            print "Tweet with id: " + str(s.id) + " replied to."
+            time.sleep(self.delay)
+    
+    def rewtweet_attack(self, count):
+        count = int(count)
+        print "Retweeting " + str(count) + " tweets. Due to rate-limits, this may take a while..."
+        print "Tweets expected to be retweeted: " + str(count)
+        eta = count * self.delay
+        print self.format_eta(eta)
+        for s in self.api.user_timeline(self.victim.id, count=count):
+            if self.is_retweet(s):
+                if s.retweeted_status.author.id == self.api.me().id:
+                    print "Tweet with id: " + str(s.id) + " is owned by you, skipping."
+                else:
+                    if s.retweeted:
+                        print "Tweet with id: " + str(s.id) + " already retweeted, skipping."
+                    else:
+                        self.api.retweet(s.id)
+                        print "Tweet with id: " + str(s.id) + " retweeted." 
+            else:
+                if s.retweeted:
+                    print "Tweet with id: " + str(s.id) + " already retweeted, skipping."
+                else:
+                    self.api.retweet(s.id)
+                    print "Tweet with id: " + str(s.id) + " retweeted."
+            time.sleep(self.delay)
+            
+    def is_retweet(self, s):
+        if s.retweet_count > 0:
+            return True
+        else:
+            return False
+
+    def get_attack_types(self):
+        return "favorite, retweet (highly expirimental)"
+
+    def format_eta(self, eta):
+        if eta > 60:
+            return "ETA: " + str(eta / 60) + "M"
+        else:
+            return "ETA: " + str(eta) + "S"
+
+    def format_user_info(self, u):
+        return "id: " + str(u.id) + "\nscreen_name: " + u.screen_name + "\nname: " + u.name + "\nprofile_image_url: " + u.profile_image_url.replace("_normal", "") + "\ndescription: " + u.description + "\nwebsite: " + u.url
+
 
 class AskFM:
     def __init__(self, username):
