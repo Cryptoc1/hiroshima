@@ -34,7 +34,7 @@ Video demo [here](https://www.youtube.com/watch?v=-xFVXAt4lMY)
 
 ### Dependencies:
 * Mechanize
-* python-twitter
+* tweepy
 * python-instagram
 * webbrowser
 
