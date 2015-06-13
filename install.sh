@@ -22,4 +22,7 @@ pip install tweepy --upgrade
 echo "Installing python-instagram..."
 pip install python-instagram --upgrade
 
+echo "Installing mechanize..."
+pip install mechanize --upgrade
+
 echo "Process complete, wasn't so bad was it? Follow the instructions in installation-instructions.md"
