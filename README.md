@@ -11,6 +11,7 @@ Hiroshima is in very early development and currently only supports Ask.fm. In fu
 - [ ] ~~Twitter Mentions/Send Tweet~~<sup>2</sup>
 - [x] Twitter Favorite
 - [ ] Twitter Reply
+- [x] Twitter Retweet (Buggy, but "working")
 - [ ] YouTube Likes
 - [ ] YouTube Comments
 - [ ] Kik messaging
