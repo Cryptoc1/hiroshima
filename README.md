@@ -31,8 +31,7 @@ Have a suggestion? Open an issue!
 ![screenshot](screens/instagram.png)
 ![screenshot](screens/askfm.png)
 
-Instagram video demo:
-[![Instagram Demo](http://img.youtube.com/vi/-xFVXAt4lMY/0.jpg)](http://www.youtube.com/watch?v=-xFVXAt4lMY)
+Instagram video demo [here](http://www.youtube.com/watch?v=-xFVXAt4lMY)
 
 ### TODO
 * Store access tokens in preference file (so authorization isn't required eachtime)
