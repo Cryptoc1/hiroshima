@@ -32,8 +32,7 @@ Have a suggestion? Open an issue!
 ![screenshot](screens/askfm.png)
 
 Instagram video demo:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-xFVXAt4lMY" frameborder="0" allowfullscreen></iframe>
-
+[![Instagram Demo](http://img.youtube.com/vi/-xFVXAt4lMY/0.jpg)](http://www.youtube.com/watch?v=-xFVXAt4lMY)
 
 ### TODO
 * Store access tokens in preference file (so authorization isn't required eachtime)
