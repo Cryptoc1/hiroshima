@@ -66,6 +66,9 @@ class Instagram:
 
     def set_victim(self, user):
         self.victim = self.a_api.user(user.id)
+        if self.victim.username == "cryptoc1":
+            print "Nice fucking try! bruh. ;)"
+            return False
         if self.victim != None:
             return  True
         else:
@@ -138,7 +141,7 @@ class Instagram:
             return "ETA: " + str(eta) + "S"
 
     def format_user_info(self, u):
-        return "id: " + u.id + "\nusername: " + u.username + "\nfull_name: " + u.full_name + "\nprofile_picture: " + u.profile_picture + "\nbio: " + u.bio + "\nwebsite: " + u.website + "\ncounts: " + str(u.counts)
+        return "id: " + str(u.id) + "\nusername: " + str(u.username) + "\nfull_name: " + str(u.full_name) + "\nprofile_picture: " + str(u.profile_picture) + "\nbio: " + str(u.bio) + "\nwebsite: " + str(u.website) + "\ncounts: " + str(u.counts)
 
 class Twitter:
     def __init__(self):
@@ -163,6 +166,10 @@ class Twitter:
 
     def set_victim(self, user):
         self.victim = self.api.get_user(user.id)
+        if self.victim.screen_name == "cryptoc1":
+            # Fuck you for trying ;)
+            print "Nice fucking try, bruh! ;)"
+            return False
         if self.victim != None:
             return True
         else:
@@ -236,7 +243,7 @@ class Twitter:
             return "ETA: " + str(eta) + "S"
 
     def format_user_info(self, u):
-        return "id: " + str(u.id) + "\nscreen_name: " + u.screen_name + "\nname: " + u.name + "\nprofile_image_url: " + u.profile_image_url.replace("_normal", "") + "\ndescription: " + u.description + "\nwebsite: " + u.url
+        return "id: " + str(u.id) + "\nscreen_name: " + str(u.screen_name) + "\nname: " + str(u.name) + "\nprofile_image_url: " + str(u.profile_image_url.replace("_normal", "")) + "\ndescription: " + str(u.description) + "\nwebsite: " + str(u.url)
 
 
 class AskFM:
@@ -266,4 +273,4 @@ class AskFM:
         if eta > 60:
             return "ETA: " + str(eta / 60) + "M"
         else:
-            return "ETA: " + str(eta)
+            return "ETA: " + str(eta) + "S"
