@@ -9,7 +9,7 @@
 ##
 
 
-import sys, os, time, webbrowser
+import sys, os, time, webbrowser, ConfigParser
 from instagram.client import InstagramAPI
 import tweepy
 import mechanize
@@ -42,7 +42,6 @@ class Instagram:
         # Stuff for the API
         self.client_id = 'd00446a61de44643bd0d1a21d78e0f5a'
         self.client_secret = 'c742af13e3a04138bad288c50e005999'
-        self.access_token = None
         self.redirect_uri = 'http://localhost/hiroshima/auth/insta'
         self.raw_scope = 'basic likes'
         self.scope = self.raw_scope.split(' ')
@@ -51,18 +50,37 @@ class Instagram:
             self.scope = ["basic"]
         self.api = InstagramAPI(client_id=self.client_id, client_secret=self.client_secret, redirect_uri=self.redirect_uri)
         self.redirect_uri = self.api.get_authorize_login_url(scope=self.scope)
+        if os.path.exists(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg")):
+            self.config = ConfigParser.ConfigParser()
+            self.config.read(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg"))
+            self.access_token = self.config.get('insta', 'access_token')
+            if self.access_token != "None":
+                self.AUTH_IN_PREFS = True
+            else:
+                self.AUTH_IN_PREFS = False
+        else:
+            print "~/.config/hiroshima/hiroshima.cfg does not exist. Run install.sh or copy defautl.cfg to ~/.config/hiroshima/hiroshima.cfg"
 
     def login(self):
-        print "You will be redirected to an authorization page in your browser. Copy the code in the prompt and paste it below."
-        webbrowser.open(self.redirect_uri)
-        code = (str(input("code: ").strip()))
-        self.access_token = self.api.exchange_code_for_access_token(code)
-        if self.access_token != None:
-            self.a_api = InstagramAPI(access_token=self.access_token[0])
+        if not self.AUTH_IN_PREFS:
+            print "You will be redirected to an authorization page in your browser. Copy the code in the prompt and paste it below."
+            webbrowser.open(self.redirect_uri)
+            code = (str(input("code: ").strip()))
+            self.access_token = self.api.exchange_code_for_access_token(code)
+            if self.access_token != None:
+                self.config.set('insta', 'access_token', str(self.access_token[0]))
+                f = open(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg"), 'wb')
+                self.config.write(f)
+                f.close()
+                self.a_api = InstagramAPI(access_token=self.access_token[0])
+                print "You're account has been authorized."
+                return True
+            else:
+                return False
+        else:
+            self.a_api = InstagramAPI(access_token=self.access_token)
             print "You're account has been authorized."
             return True
-        else:
-            return False
 
     def set_victim(self, user):
         self.victim = self.a_api.user(user.id)
@@ -151,19 +169,43 @@ class Twitter:
         self.auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
         self.redirect_uri = self.auth.get_authorization_url()
         self.delay = 5
+        if os.path.exists(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg")):
+            self.config = ConfigParser.ConfigParser()
+            self.config.read(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg"))
+            self.tokens = {"key": self.config.get('twit', 'access_token'), "secret": self.config.get('twit', 'access_token_secret')}
+            if self.tokens["key"] == "None" or self.tokens["secret"] == "None":
+                self.AUTH_IN_PREFS = False
+            else:
+                self.AUTH_IN_PREFS = True
+        else:
+            print "~/.config/hiroshima/hiroshima.cfg does not exist. Run install.sh, or copy default.cfg to ~/.config/hiroshima/hiroshima.cfg."
     
     def login(self):
-        print "You will be redirected to an authorization page in your browser. Copy the code in the prompt and paste it below."
-        webbrowser.open(self.redirect_uri)
-        code = raw_input("code: ")
-        self.auth.get_access_token(code)
-        if self.auth.access_token:
-            self.api = tweepy.API(self.auth)
-            print "Your account has been authorized."
-            return True
+        if not self.AUTH_IN_PREFS:
+            print "You will be redirected to an authorization page in your browser. Copy the code in the prompt and paste it below."
+            webbrowser.open(self.redirect_uri)
+            code = raw_input("code: ")
+            self.auth.get_access_token(code)
+            if self.auth.access_token:
+                self.config.set('twit', 'access_token', str(self.auth.access_token))
+                self.config.set('twit', 'access_token_secret', str(self.auth.access_token_secret))
+                f = open(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg"), 'wb')
+                self.config.write(f)
+                f.close()
+                self.api = tweepy.API(self.auth)
+                print "Your account has been authorized."
+                return True
+            else:
+                return False
         else:
-            return False
-
+            self.auth.set_access_token(self.tokens["key"], self.tokens["secret"])
+            if self.auth.access_token:
+                self.api = tweepy.API(self.auth)
+                print "You have been authorized."
+                return True
+            else:
+                return False
+           
     def set_victim(self, user):
         self.victim = self.api.get_user(user.id)
         if self.victim.screen_name == "cryptoc1":

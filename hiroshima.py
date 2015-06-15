@@ -10,8 +10,6 @@
 
 import networks, sys
 
-DEVMODE = True
-
 _usage = "hiroshima help: \
             \n\tAttackable Networks: \
                 \n\t\t+ Twitter \
@@ -59,8 +57,11 @@ def main():
 
 def instagram_attack():
     insta = networks.Instagram()
-    print "In order for any actions to be preformed, you need to authorize hiroshima to use your Instagram account. Proceed? (Y/n)"
-    prompt = raw_input("> ").lower()
+    if not insta.AUTH_IN_PREFS:
+        print "In order for any actions to be preformed, you need to authorize hiroshima to use your Instagram account. Proceed? (Y/n)"
+        prompt = raw_input("> ").lower()
+    else:
+        prompt = "y"
     if prompt == "y":
         if insta.login():
             print "Enter the username of your victim"
@@ -109,8 +110,11 @@ def instagram_attack():
 
 def twitter_attack():
     twit = networks.Twitter()
-    print "In order for any actions to be preformed, you need to authorize hiroshima to use your Twitter account. Proceed? (Y/n)"
-    prompt = raw_input("> ").lower()
+    if not twit.AUTH_IN_PREFS:
+        print "In order for any actions to be preformed, you need to authorize hiroshima to use your Twitter account. Proceed? (Y/n)"
+        prompt = raw_input("> ").lower()
+    else:
+        prompt = "y"
     if prompt == "y":
         if twit.login():
             print "Enter the username of your victim."
