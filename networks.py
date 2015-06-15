@@ -34,7 +34,7 @@ except (ImportError, AttributeError):
     
 class Instagram:
     def __init__(self):
-               # Stuff for the attack
+        # Stuff for the attack
         self.delay = 5
         self.victim = None
 

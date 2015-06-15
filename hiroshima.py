@@ -172,7 +172,6 @@ def twitter_attack():
         print "Unrecognized character(s)"
         prologue()
 
-
 def askfm_attack():
     print "Enter the username"
     username = raw_input("> ")
