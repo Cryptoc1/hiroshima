@@ -43,6 +43,5 @@ Twitter video demo [here](https://youtu.be/oP5qb-41n8c)
 * Mechanize
 * tweepy
 * python-instagram
-* webbrowser
 
 Hiroshima has only been tested/designed for Mac OS X
