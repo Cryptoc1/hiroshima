@@ -141,7 +141,7 @@ class Instagram:
             return "ETA: " + str(eta) + "S"
 
     def format_user_info(self, u):
-        return "id: " + str(u.id) + "\nusername: " + str(u.username) + "\nfull_name: " + str(u.full_name) + "\nprofile_picture: " + str(u.profile_picture) + "\nbio: " + str(u.bio) + "\nwebsite: " + str(u.website) + "\ncounts: " + str(u.counts)
+        return "id: " + str(u.id) + "\nusername: " + str(u.username) + "\nfull_name: " + unicode(u.full_name).encode('utf-8', 'ignore') + "\nprofile_picture: " + str(u.profile_picture) + "\nbio: " + unicode(u.bio).encode('utf-8', 'ignore') + "\nwebsite: " + str(u.website) + "\ncounts: " + str(u.counts)
 
 class Twitter:
     def __init__(self):
@@ -243,7 +243,7 @@ class Twitter:
             return "ETA: " + str(eta) + "S"
 
     def format_user_info(self, u):
-        return "id: " + str(u.id) + "\nscreen_name: " + str(u.screen_name) + "\nname: " + str(u.name) + "\nprofile_image_url: " + str(u.profile_image_url.replace("_normal", "")) + "\ndescription: " + str(u.description) + "\nwebsite: " + str(u.url)
+        return "id: " + str(u.id) + "\nscreen_name: " + str(u.screen_name) + "\nname: " + unicode(u.name).encode('utf-8', 'ignore') + "\nprofile_image_url: " + str(u.profile_image_url.replace("_normal", "")) + "\ndescription: " + unicode(u.description).encode('utf-8', 'ignore') + "\nwebsite: " + str(u.url)
 
 
 class AskFM:
