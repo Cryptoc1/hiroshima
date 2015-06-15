@@ -31,7 +31,9 @@ Have a suggestion? Open an issue!
 ![screenshot](screens/instagram.png)
 ![screenshot](screens/askfm.png)
 
-Instagram video demo [here](http://www.youtube.com/watch?v=-xFVXAt4lMY)
+Instagram video demo [here](https://www.youtube.com/watch?v=-xFVXAt4lMY)
+
+Twitter video demo [here](https://youtu.be/oP5qb-41n8c)
 
 ### TODO
 * Store access tokens in preference file (so authorization isn't required eachtime)
@@ -41,6 +43,5 @@ Instagram video demo [here](http://www.youtube.com/watch?v=-xFVXAt4lMY)
 * Mechanize
 * tweepy
 * python-instagram
-* webbrowser
 
 Hiroshima has only been tested/designed for Mac OS X
