@@ -44,21 +44,4 @@ if [ -f "~/.config/hiroshima/hiroshima.cfg" ]; then
   echo "[+] default.cfg copied to ~/.config/hiroshima/ as hiroshima.cfg";
 fi
 
-echo "Copying hiroshima..."
-if [ -f "/usr/bin/hiroshima" ]; then
-  echo "[!] /usr/bin/hiroshima already exists, overwrite? (y/n)";
-  read input;
-  if [ "$input" = "y" ]; then
-    sudo cp hiroshima.py /usr/bin/hiroshima;
-    echo "[+] hiroshima.py copied to /usr/bin as hiroshima";
-  else
-    echo "Okay, exiting.";
-    exit;
-  fi
-else
-  sudo cp hiroshima.py /usr/bin/hiroshima;
-  echo "[+] hiroshima.py copied to /usr/bin as hiroshima"
-fi
-
-
 echo "Process complete, wasn't so bad was it? Make sure to check instructions.md."
