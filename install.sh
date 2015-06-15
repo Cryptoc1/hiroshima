@@ -1,5 +1,4 @@
 #!/bin/bash
-
 echo "This install script will take (a very few) steps to setting up Hiroshima to work properly.";
 echo "You will be asked to enter your password multiple times throughout the process, so don't go anywhere (not that this is a long process anyway).";
 
