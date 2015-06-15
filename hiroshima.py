@@ -28,7 +28,7 @@ _usage = "hiroshima help: \
             \n\tCommands: \
                 \n\t\tbegin :: enters the main-loop to attack \
                 \n\t\texit :: exits the program \
-                \n\t\thelp|? :: prints this help dialog "
+                \n\t\thelp|? :: prints this help dialog"
 
 def prologue():
     print "For help, enter 'help', or '?'. To begin, enter 'begin', or 'exit' to exit."
