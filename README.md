@@ -36,7 +36,7 @@ Instagram video demo [here](https://www.youtube.com/watch?v=-xFVXAt4lMY)
 Twitter video demo [here](https://youtu.be/oP5qb-41n8c)
 
 ### TODO
-* Store access tokens in preference file (so authorization isn't required eachtime)
+* Add arguments option?
 
 
 ### Dependencies:
