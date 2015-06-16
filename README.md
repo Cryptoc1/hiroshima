@@ -10,8 +10,8 @@ Hiroshima supports the following (checked means that the feature is active, and 
 - [ ] ~~Instagram Comments~~<sup>1</sup>
 - [ ] ~~Twitter Mentions/Send Tweet~~<sup>2</sup>
 - [x] Twitter Favorite
-- [x] Twitter Reply (This feature is broken and not included in the user flow, but exists in the code)
-- [x] Twitter Retweet (Experimental)
+- [x] Twitter Reply <sup>(This feature is **broken** and not included in the user flow, but exists in the code)</sup>
+- [x] Twitter Retweet <sup>(Experimental)</sup>
 - [ ] YouTube Likes
 - [ ] YouTube Comments
 - [ ] Kik messaging
