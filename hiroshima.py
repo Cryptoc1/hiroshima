@@ -28,7 +28,10 @@ _usage = "hiroshima help: \
             \n\tCommands: \
                 \n\t\tbegin :: enters the main-loop to attack \
                 \n\t\texit :: exits the program \
-                \n\t\thelp|? :: prints this help dialog"
+                \n\t\thelp|? :: prints this help dialog \
+                \n\t\tdelay <s> :: print the current delay, or set delay 's', in seconds, as the global delay"
+
+_delay = 5
 
 def prologue():
     print "For help, enter 'help', or '?'. To begin, enter 'begin', or 'exit' to exit."
@@ -40,16 +43,23 @@ def prologue():
         main()
     elif cmd == "exit":
         sys.exit()
+    elif cmd.split(' ')[0] == "delay":
+        global _delay
+        opts = cmd.split(' ')
+        if len(opts) < 2:
+            print "Current delay: " + str(_delay)
+        else:
+            _delay = opts[1]
+            print "delay set to " + str(_delay)
+        prologue()
     else:
         prologue()
 
 def main():
-    delay = None
-    for i in range(0, len(sys.argv)):
+    '''for i in range(0, len(sys.argv)):
         if sys.argv[i] == "--delay" or sys.argv[i] == "-d":
-            delay = int(sys.argv[i+1])
-    if delay == None:
-        delay = 5
+            delay = int(sys.argv[i+1])'''
+    delay = _delay
     print "Enter a social network to attack"
     network = raw_input("> ").lower()
     if network == "instagram":

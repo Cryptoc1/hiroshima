@@ -1,6 +1,6 @@
 # Hiroshima
 ### What is Hiroshima?
-Hiroshima is an all-in-one spammer program. 
+Hiroshima is an all-in-one spammer program.
 
 ### What's being worked on right now
 Hiroshima supports the following (checked means that the feature is active, and properly functing. Un-checked is in development, or being looked into):
@@ -11,11 +11,11 @@ Hiroshima supports the following (checked means that the feature is active, and 
 - [ ] ~~Twitter Mentions/Send Tweet~~<sup>2</sup>
 - [x] Twitter Favorite
 - [x] Twitter Reply <sup>(This feature is **broken** and not included in the user flow, but exists in the code)</sup>
-- [x] Twitter Retweet <sup>(Experimental)</sup>
+- [x] Twitter Retweet <sup>(beta)</sup>
 - [ ] YouTube Likes
 - [ ] YouTube Comments
 - [ ] Kik messaging
-- [ ] Snapchat 
+- [ ] Snapchat
 - [x] ask.fm queries
 
 Have a suggestion? Open an issue!
