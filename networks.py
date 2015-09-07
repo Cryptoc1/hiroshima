@@ -235,11 +235,17 @@ class Twitter:
                         print "Tweet with id: " + str(s.id) + " favorited."
             elif self.is_mention(s):
                 if "@" + self.api.me().screen_name in s.text:
-                    self.api.create_favorite(s.id)
-                    print "Tweet with id: " + str(s.id) + " that mentions you favorited."
+                    if s.favorited:
+                        print "Tweet with id: " + str(s.id) + " already favorited, skipping."
+                    else:
+                        self.api.create_favorite(s.id)
+                        print "Tweet with id: " + str(s.id) + " that mentions you favorited."
                 elif include_mentions:
-                    self.api.create_favorite(s.id)
-                    print "Tweet with id: " + str(s.id) + " favorited."
+                    if s.favorited:
+                        print "Tweet with id: " + str(s.id) + " already favorited, skipping."
+                    else:
+                        self.api.create_favorite(s.id)
+                        print "Tweet with id: " + str(s.id) + " favorited."
                 else:
                     print "Tweet with id: " + str(s.id) + " is a mention, skipping."
             else:
@@ -279,11 +285,17 @@ class Twitter:
                         print "Tweet with id: " + str(s.id) + " retweeted."
             elif self.is_mention(s):
                 if "@" + self.api.me().screen_name in s.text:
-                    self.api.retweet(s.id)
-                    print "Tweet with id: " + str(s.id) + " that mentions you retweeted."
+                    if s.retweeted:
+                        print "Tweet with id: " + str(s.id) + " already retweeted, skipping."
+                    else:
+                        self.api.retweet(s.id)
+                        print "Tweet with id: " + str(s.id) + " that mentions you retweeted."
                 elif include_mentions:
-                    self.api.retweet(s.id)
-                    print "Tweet with id: " + str(s.id) + " retweeted."
+                    if s.retweeted:
+                        print "Tweet with id: " + str(s.id) + " already retweeted, skipping."
+                    else:
+                        self.api.retweet(s.id)
+                        print "Tweet with id: " + str(s.id) + " retweeted."
                 else:
                     print "Tweet with id: " + str(s.id) + " is a mention, skipping."
             else:
