@@ -27,6 +27,7 @@ Have a suggestion? Open an issue!
 ### Screenshots
 ![screenshot](screens/start-screen.png)
 ![screenshot](screens/help.png)
+![screenshot](screens/delay.png)
 ![screenshot](screens/twitter.png)
 ![screenshot](screens/instagram.png)
 ![screenshot](screens/askfm.png)
