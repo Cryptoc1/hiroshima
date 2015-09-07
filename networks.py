@@ -219,18 +219,35 @@ class Twitter:
     def search_users(self, username):
         return self.api.get_user(username)
 
-    def fav_attack(self, count):
+    def fav_attack(self, count, include_rts=False, include_mentions=False):
         count = int(count)
         print "Favoriting " + str(count) + " tweets. Due to rate-limits, this may take a while..."
         print "Tweets expected to be favorited: " + str(count)
         eta = count * self.delay
         print self.format_eta(eta)
         for s in self.api.user_timeline(self.victim.id, count=count):
-            if s.favorited:
-                print "Tweet with id: " + str(s.id) + " already favorited, skipping."
+            if self.is_retweet(s):
+                if include_rts:
+                    if s.favorited:
+                        print "Tweet with id: " + str(s.id) + " already favorited, skipping."
+                    else:
+                        self.api.create_favorite(s.id)
+                        print "Tweet with id: " + str(s.id) + " favorited."
+            elif self.is_mention(s):
+                if "@" + self.api.me().screen_name in s.text:
+                    self.api.create_favorite(s.id)
+                    print "Tweet with id: " + str(s.id) + " that mentions you favorited."
+                elif include_mentions:
+                    self.api.create_favorite(s.id)
+                    print "Tweet with id: " + str(s.id) + " favorited."
+                else:
+                    print "Tweet with id: " + str(s.id) + " is a mention, skipping."
             else:
-                self.api.create_favorite(s.id)
-                print "Tweet with id: " + str(s.id) + " favorited."
+                if s.favorited:
+                    print "Tweet with id: " + str(s.id) + " already favorited, skipping."
+                else:
+                    self.api.create_favorite(s.id)
+                    print "Tweet with id: " + str(s.id) + " favorited."
             time.sleep(self.delay)
 
     def reply_attack(self, text, count):
@@ -244,7 +261,7 @@ class Twitter:
             print "Tweet with id: " + str(s.id) + " replied to."
             time.sleep(self.delay)
 
-    def rewtweet_attack(self, count, include_rts=False):
+    def rewtweet_attack(self, count, include_rts=False, include_mentions=False):
         count = int(count)
         print "Retweeting " + str(count) + " tweets. Due to rate-limits, this may take a while..."
         print "Tweets expected to be retweeted: " + str(count)
@@ -260,6 +277,15 @@ class Twitter:
                     else:
                         self.api.retweet(s.id)
                         print "Tweet with id: " + str(s.id) + " retweeted."
+            elif self.is_mention(s):
+                if "@" + self.api.me().screen_name in s.text:
+                    self.api.retweet(s.id)
+                    print "Tweet with id: " + str(s.id) + " that mentions you retweeted."
+                elif include_mentions:
+                    self.api.retweet(s.id)
+                    print "Tweet with id: " + str(s.id) + " retweeted."
+                else:
+                    print "Tweet with id: " + str(s.id) + " is a mention, skipping."
             else:
                 if s.retweeted:
                     print "Tweet with id: " + str(s.id) + " already retweeted, skipping."
@@ -270,6 +296,12 @@ class Twitter:
 
     def is_retweet(self, s):
         if "RT" in s.text:
+            return True
+        else:
+            return False
+
+    def is_mention(self, s):
+        if "@" in s.text and " @ " not in s.text:
             return True
         else:
             return False

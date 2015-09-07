@@ -147,7 +147,32 @@ def twitter_attack(delay):
                     attack_type = raw_input("> ").lower()
                     if attack_type == "favorite" or attack_type == "fav" or attack_type == "fave":
                         print "Enter the number of tweets to favorite."
-                        twit.fav_attack(raw_input("> "))
+                        count = int(raw_input("> "))
+                        print "Include retweets by the victim? (Y/n)"
+                        cmd = raw_input("> ").lower()
+                        if cmd == "y":
+                            print "Include mentions? (Y/n)"
+                            cmd = raw_input("> ").lower()
+                            if cmd == "y":
+                                twit.fav_attack(count, True, True)
+                            elif cmd == "n":
+                                twit.fav_attack(count, True, False)
+                            else:
+                                print "Unrecognized character(s)"
+                                prologue()
+                        elif cmd == "n":
+                            print "Include mentions? (Y/n)"
+                            cmd = raw_input("> ").lower()
+                            if cmd == "y":
+                                twit.fav_attack(count, False, True)
+                            elif cmd == "n":
+                                twit.fav_attack(count, False, False)
+                            else:
+                                print "Unrecognized character(s)"
+                                prologue()
+                        else:
+                            print "Unrecognized character(s)"
+                            prologue()
                         print "Favorite attack complete."
                         prologue()
                     elif attack_type == "reply":
@@ -163,13 +188,29 @@ def twitter_attack(delay):
                             prologue()
                     elif attack_type == "retweet" or attack_type == "rt":
                         print "Enter the number of tweets to be retweeted."
-                        count = raw_input("> ")
-                        print "Include retweets by the victim?"
+                        count = int(raw_input("> "))
+                        print "Include retweets by the victim? (Y/n)"
                         cmd = raw_input("> ").lower()
                         if cmd == "y":
-                            twit.rewtweet_attack(count, True)
+                            print "Include mentions? (Y/n)"
+                            cmd = raw_input("> ").lower()
+                            if cmd == "y":
+                                twit.rewtweet_attack(count, True, True)
+                            elif cmd == "n":
+                                twit.rewtweet_attack(count, True, False)
+                            else:
+                                print "Unrecognized character(s)"
+                                prologue()
                         elif cmd == "n":
-                            twit.rewtweet_attack(count, False)
+                            print "Include mentions? (Y/n)"
+                            cmd = raw_input("> ").lower()
+                            if cmd == "y":
+                                twit.rewtweet_attack(count, False, True)
+                            elif cmd == "n":
+                                twit.rewtweet_attack(count, False, False)
+                            else:
+                                print "Unrecognized character(s)"
+                                prologue()
                         else:
                             print "Unrecognized character(s)"
                             prologue()
