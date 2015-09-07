@@ -25,7 +25,7 @@ Have a suggestion? Open an issue!
 <sup>2</sup>Twitter doesn't allow for two like tweets to be tweeted (throws duplication error)
 
 ### Screenshots
-![screenshot](screens/start-screen.png)
+![screenshot](screens/start-screen.png) 
 ![screenshot](screens/help.png)
 ![screenshot](screens/delay.png)
 ![screenshot](screens/twitter.png)
