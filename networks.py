@@ -35,7 +35,7 @@ except (ImportError, AttributeError):
 class Instagram:
     def __init__(self, delay=5):
         # Stuff for the attack
-        self.delay = delay
+        self.delay = int(delay)
         self.victim = None
 
         # Stuff for the API
@@ -167,7 +167,7 @@ class Twitter:
         self.victim = None
         self.auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
         self.redirect_uri = self.auth.get_authorization_url()
-        self.delay = delay
+        self.delay = int(delay)
         if os.path.exists(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg")):
             self.config = ConfigParser.ConfigParser()
             self.config.read(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg"))
@@ -254,7 +254,7 @@ class Twitter:
             if self.is_retweet(s):
                 if s.retweeted_status.author.id == self.api.me().id:
                     print "Tweet with id: " + str(s.id) + " is owned by you, skipping."
-                elif self.include_rts:
+                elif include_rts:
                     if s.retweeted:
                         print "Tweet with id: " + str(s.id) + " already retweeted, skipping."
                     else:
@@ -275,7 +275,7 @@ class Twitter:
             return False
 
     def get_attack_types(self):
-        return "favorite, retweet (highly expirimental)"
+        return "favorite, retweet (beta)"
 
     def format_eta(self, eta):
         if eta > 60:

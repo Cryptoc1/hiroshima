@@ -45,9 +45,9 @@ def prologue():
 
 def main():
     delay = None
-    for i in range(0, len(sys.argv)-1):
-        if sys.argv[i] == "--delay" or "-d":
-            delay = sys.argv[i+1]
+    for i in range(0, len(sys.argv)):
+        if sys.argv[i] == "--delay" or sys.argv[i] == "-d":
+            delay = int(sys.argv[i+1])
     if delay == None:
         delay = 5
     print "Enter a social network to attack"
@@ -135,7 +135,7 @@ def twitter_attack(delay):
                 if twit.set_victim(search):
                     print "Enter attack type (" + twit.get_attack_types() + ")"
                     attack_type = raw_input("> ").lower()
-                    if attack_type == "favorite":
+                    if attack_type == "favorite" or attack_type == "fav" or attack_type == "fave":
                         print "Enter the number of tweets to favorite."
                         twit.fav_attack(raw_input("> "))
                         print "Favorite attack complete."
@@ -151,7 +151,7 @@ def twitter_attack(delay):
                             twit.reply_attack(text, raw_input("> "))
                             print "Reply attack complete."
                             prologue()
-                    elif attack_type == "retweet":
+                    elif attack_type == "retweet" or attack_type == "rt":
                         print "Enter the number of tweets to be retweeted."
                         count = raw_input("> ")
                         print "Include retweets by the victim?"
