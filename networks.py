@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ##
-# 
+#
 # networks.py
 # This file contains the classes for different social network attacks.
 # Samuel Steele (cryptoc1)
@@ -16,7 +16,7 @@ import mechanize
 if len(sys.argv) > 1 and sys.argv[1] == 'local':
     try:
         from test_settings import *
-    
+
         InstagramAPI.host = test_host
         InstagramAPI.base_path = test_base_path
         InstagramAPI.access_token_field = "access_token"
@@ -31,11 +31,11 @@ try:
     input = getattr(__builtin__, 'raw_input')
 except (ImportError, AttributeError):
     pass
-    
+
 class Instagram:
-    def __init__(self):
+    def __init__(self, delay=5):
         # Stuff for the attack
-        self.delay = 5
+        self.delay = delay
         self.victim = None
 
         # Stuff for the API
@@ -161,13 +161,13 @@ class Instagram:
         return "id: " + str(u.id) + "\nusername: " + str(u.username) + "\nfull_name: " + unicode(u.full_name).encode('utf-8', 'ignore') + "\nprofile_picture: " + str(u.profile_picture) + "\nbio: " + unicode(u.bio).encode('utf-8', 'ignore') + "\nwebsite: " + str(u.website) + "\ncounts: " + str(u.counts)
 
 class Twitter:
-    def __init__(self):
+    def __init__(self, delay=5):
         self.consumer_key = "ss9uxPWgFA5VIjZsSx5J0riHE"
         self.consumer_secret = "B2HFkfYtCIAvl2JebZky9G790ggeNUzDbcnVC6FpsRlIufcWUy"
         self.victim = None
         self.auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
         self.redirect_uri = self.auth.get_authorization_url()
-        self.delay = 5
+        self.delay = delay
         if os.path.exists(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg")):
             self.config = ConfigParser.ConfigParser()
             self.config.read(os.path.expanduser("~/.config/hiroshima/hiroshima.cfg"))
@@ -178,7 +178,7 @@ class Twitter:
                 self.AUTH_IN_PREFS = True
         else:
             print "~/.config/hiroshima/hiroshima.cfg does not exist. Run install.sh, or copy default.cfg to ~/.config/hiroshima/hiroshima.cfg."
-    
+
     def login(self):
         if not self.AUTH_IN_PREFS:
             print "You will be redirected to an authorization page in your browser. Copy the code in the prompt and paste it below."
@@ -204,7 +204,7 @@ class Twitter:
                 return True
             else:
                 return False
-           
+
     def set_victim(self, user):
         self.victim = self.api.get_user(user.id)
         if self.victim.screen_name == "cryptoc1":
@@ -232,7 +232,7 @@ class Twitter:
                 self.api.create_favorite(s.id)
                 print "Tweet with id: " + str(s.id) + " favorited."
             time.sleep(self.delay)
-    
+
     def reply_attack(self, text, count):
         count = int(count)
         print "Replying to " + str(count) + " tweets. Due to rate-limits, this may take a while..."
@@ -243,8 +243,8 @@ class Twitter:
             self.api.update_status(text, in_reply_to_status_id=s.id)
             print "Tweet with id: " + str(s.id) + " replied to."
             time.sleep(self.delay)
-    
-    def rewtweet_attack(self, count):
+
+    def rewtweet_attack(self, count, include_rts=False):
         count = int(count)
         print "Retweeting " + str(count) + " tweets. Due to rate-limits, this may take a while..."
         print "Tweets expected to be retweeted: " + str(count)
@@ -254,12 +254,12 @@ class Twitter:
             if self.is_retweet(s):
                 if s.retweeted_status.author.id == self.api.me().id:
                     print "Tweet with id: " + str(s.id) + " is owned by you, skipping."
-                else:
+                elif self.include_rts:
                     if s.retweeted:
                         print "Tweet with id: " + str(s.id) + " already retweeted, skipping."
                     else:
                         self.api.retweet(s.id)
-                        print "Tweet with id: " + str(s.id) + " retweeted." 
+                        print "Tweet with id: " + str(s.id) + " retweeted."
             else:
                 if s.retweeted:
                     print "Tweet with id: " + str(s.id) + " already retweeted, skipping."
@@ -267,9 +267,9 @@ class Twitter:
                     self.api.retweet(s.id)
                     print "Tweet with id: " + str(s.id) + " retweeted."
             time.sleep(self.delay)
-            
+
     def is_retweet(self, s):
-        if s.retweet_count > 0:
+        if "RT" in s.text:
             return True
         else:
             return False
@@ -288,9 +288,9 @@ class Twitter:
 
 
 class AskFM:
-    def __init__(self, username):
+    def __init__(self, username, delay=5):
         self.username = username
-        self.delay = 5
+        self.delay = delay
 
     def ask_question(self, q, count):
         n = 0

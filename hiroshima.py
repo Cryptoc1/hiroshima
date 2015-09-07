@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ##
-# 
+#
 # hiroshima.py
 # This is the main front-end that pulls all network attacks into one interface. Enjoy.
 # Samuel Steele (cryptoc1)
@@ -44,19 +44,25 @@ def prologue():
         prologue()
 
 def main():
+    delay = None
+    for i in range(0, len(sys.argv)-1):
+        if sys.argv[i] == "--delay" or "-d":
+            delay = sys.argv[i+1]
+    if delay == None:
+        delay = 5
     print "Enter a social network to attack"
     network = raw_input("> ").lower()
     if network == "instagram":
-        instagram_attack()
+        instagram_attack(delay)
     elif network == "twitter":
-        twitter_attack()
+        twitter_attack(delay)
     elif network == "askfm":
-        askfm_attack()
+        askfm_attack(delay)
     else:
         main()
 
-def instagram_attack():
-    insta = networks.Instagram()
+def instagram_attack(delay):
+    insta = networks.Instagram(delay)
     if not insta.AUTH_IN_PREFS:
         print "In order for any actions to be preformed, you need to authorize hiroshima to use your Instagram account. Proceed? (Y/n)"
         prompt = raw_input("> ").lower()
@@ -108,8 +114,8 @@ def instagram_attack():
         print "Unrecognized character(s)."
         prologue()
 
-def twitter_attack():
-    twit = networks.Twitter()
+def twitter_attack(delay):
+    twit = networks.Twitter(delay)
     if not twit.AUTH_IN_PREFS:
         print "In order for any actions to be preformed, you need to authorize hiroshima to use your Twitter account. Proceed? (Y/n)"
         prompt = raw_input("> ").lower()
@@ -135,7 +141,7 @@ def twitter_attack():
                         print "Favorite attack complete."
                         prologue()
                     elif attack_type == "reply":
-                        print "Enter tweet text (remember the 140 character limit)."                        
+                        print "Enter tweet text (remember the 140 character limit)."
                         text = raw_input("> ")
                         if len(text) > 140:
                             print "Text length excedes (140) character limit, starting over."
@@ -147,7 +153,16 @@ def twitter_attack():
                             prologue()
                     elif attack_type == "retweet":
                         print "Enter the number of tweets to be retweeted."
-                        twit.rewtweet_attack(raw_input("> "))
+                        count = raw_input("> ")
+                        print "Include retweets by the victim?"
+                        cmd = raw_input("> ").lower()
+                        if cmd == "y":
+                            twit.rewtweet_attack(count, True)
+                        elif cmd == "n":
+                            twit.rewtweet_attack(count, False)
+                        else:
+                            print "Unrecognized character(s)"
+                            prologue()
                         print "Retweet attack complete."
                         prologue()
                     else:
@@ -172,10 +187,10 @@ def twitter_attack():
         print "Unrecognized character(s)"
         prologue()
 
-def askfm_attack():
+def askfm_attack(delay):
     print "Enter the username"
     username = raw_input("> ")
-    ask = networks.AskFM(username)
+    ask = networks.AskFM(username, delay)
     print "Enter the question to be asked"
     query = raw_input("> ")
     print "Enter the number of times the question should be asked"
